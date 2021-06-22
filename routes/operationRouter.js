@@ -1,18 +1,37 @@
 const express = require('express')
+//const validator = require ('express-joi-validation').createValidator()
 const operationControllers = require('../controllers/operationControllers')
+//const operationValidations = require ('../validations/operationValidations')
+//const checkToken = require ('../checkToken')
 
 const routes = (Operation) => {
   const operationRouter = express.Router()
   const controller = operationControllers(Operation)
 
   operationRouter.route('/admin/operations')
-    .get (controller.getOperations)  
-    .post (controller.postOperation) 
+    .get (//checkToken,
+        //validator.query(operationValidations.operationValidationsQuery), //ver q onda las "s"
+        controller.getOperations)  
+    .post (//checkToken,
+      //validator.body(operationValidations.operationValidationsBody),
+      controller.postOperation) 
   
+  operationRouter.route('/admin/operationsbytype')
+    .get (//checkToken,
+      //validator.query(operationValidations.operationValidationsQuery), //ver q onda las "s"
+      controller.getExpenses)  
+
   operationRouter.route('/admin/operations/:operationId')
-  .get(controller.getOperationById)
-  .put(controller.putOperationById)
-  .delete(controller.deleteOperationById)
+  .get(//checkToken,
+    //validator.params(operationValidations.operationValidationsParams),
+    controller.getOperationById)
+  .put(//checkToken,
+    //validator.params(operationValidations.operationValidationsParams),
+    //validator.body(operationValidations.operationValidationsPut),
+    controller.putOperationById)
+  .delete(//checkToken,
+    //validator.params(operationValidations.operationValidationsParams),
+    controller.deleteOperationById)
     
   return operationRouter
 }
