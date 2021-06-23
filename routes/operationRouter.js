@@ -21,6 +21,11 @@ const routes = (Operation) => {
       //validator.query(operationValidations.operationValidationsQuery), //ver q onda las "s"
       controller.getOperationByType)  
 
+  operationRouter.route('/admin/balance')
+  .get (//checkToken,
+    //validator.query(operationValidations.operationValidationsQuery), //ver q onda las "s"
+    controller.operationsBalance)    
+
   operationRouter.route('/admin/operations/:operationId')
   .get(checkToken,
     //validator.params(operationValidations.operationValidationsParams),

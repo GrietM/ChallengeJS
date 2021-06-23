@@ -4,6 +4,26 @@ const operationControllers = (Operation) => {
     try {
       const {query} = req
       const response = await Operation.find(query)
+
+      //armo el balance
+      console.log('response.data de las operaciones',response)
+        // es un array de objetos. response [{.amount},{},{}]
+        let operations = response
+        let totalExpenses = 0
+        let totalIncomes=0
+        console.log("operations:",operations)
+        for (let i = 0; i < operations.length; i++) {
+          if (operations[i].operationType == "expense"){
+          // Acceder al objeto del arreglo en la posicion "i"
+          totalExpenses = totalExpenses+operations[i].amount
+          //console.log("totalExpenses",totalExpenses)
+          }
+          else{
+          totalIncomes = totalIncomes+operations[i].amount
+          //console.log("totalIncomes",totalIncomes)}
+          }}
+          let balance = totalIncomes - totalExpenses
+          console.log("BALANCE:", balance)
       if (response.length == 0){
         return res.status(202).json({message: 'No matches found'})
       } 
@@ -34,6 +54,15 @@ const operationControllers = (Operation) => {
       if (query.operationType == ('expense')){
         console.log('entró por el true de query')
         const response = await Operation.find(query)
+        console.log('response.data de los expneses',response)
+        // es un array de objetos. response [{.amount},{},{}]
+        let expenses = response
+        let totalExpenses = 0
+        console.log("expenses:",expenses)
+        for (let i = 0; i < expenses.length; i++) {
+          // Acceder al objeto del arreglo en la posicion "i"
+          totalExpenses = totalExpenses+expenses[i].amount}
+          console.log("totalExpenses:", totalExpenses)
         if (response.length == 0){
           return res.status(202).json({message: 'No matches found'})
         } 
@@ -61,26 +90,49 @@ const operationControllers = (Operation) => {
     }
   } 
 
- /*  const getIncomes = async (req,res) => {
-    try {
-      const {query} = req
-      console.log("query:",query)
-      if (query.operationType == ('income')){
-        console.log('entró por el true de query')
-        const response = await Operation.find(query)
+ const operationsBalance = async (req,res) => {
+  try {
+    const {query} = req
+    const response = await Operation.find(query)
+    //armo el balance
+    console.log('response.data de las operaciones',response)
+      // es un array de objetos. response [{.amount},{},{}]
+      let operations = response
+      let totalExpenses = 0
+      let totalIncomes = 0
+      console.log("operations:",operations)
+      for (let i = 0; i < operations.length; i++) {
+        if (operations[i].operationType == "expense"){
+        // Acceder al objeto del arreglo en la posicion "i"
+        totalExpenses = totalExpenses+operations[i].amount
+        //console.log("totalExpenses",totalExpenses)
+        }
+        else{
+        totalIncomes = totalIncomes+operations[i].amount
+        //console.log("totalIncomes",totalIncomes)}
+        }}
+        let balance = totalIncomes - totalExpenses
+        const balanceData = 
+       {
+        totalIncomes: totalIncomes,
+        totalExpenses: totalExpenses,
+        balance:balance
+       }
+        console.log("balanceData:", balanceData)
+        console.log("BALANCE:", balance)
         if (response.length == 0){
           return res.status(202).json({message: 'No matches found'})
         } 
         else {
-          return res.json(response) 
-      }}
+          return res.json(balanceData) }
+  }
+  catch(err){
+    console.log(err)
+    res.status(500).json({message:"Internal Server Error"})
+    throw err
+  }
     } 
-    catch(err){
-      console.log(err)
-      res.status(500).json({message:"Internal Server Error"})
-      throw err
-    }
-  } */
+
 
   const postOperation = async (req,res) => {
     try {
@@ -149,7 +201,7 @@ const operationControllers = (Operation) => {
     }
   }
   
-return {getOperations,  getOperationByType , postOperation, getOperationById,putOperationById, deleteOperationById}  
+return {getOperations,  getOperationByType ,operationsBalance, postOperation, getOperationById,putOperationById, deleteOperationById}  
 }
 
 module.exports = operationControllers
