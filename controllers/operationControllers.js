@@ -15,7 +15,7 @@ const operationControllers = (Operation) => {
         else{
         console.log("hay", response.length, 'operaciones')
         response.reverse(); //Asi muestra los ultimos 10 registrados pero no significa que sean las ultimas 10 operaciones segun la fecha cronologica!
-        response.sort((a, b) => new Date(a.date).getTime() > new Date(b.date).getTime())
+        //response.sort((a, b) => new Date(a.date).getTime() > new Date(b.date).getTime())
         return res.json(response)}
         }
       
@@ -27,7 +27,7 @@ const operationControllers = (Operation) => {
     }
   } 
 
-   const getExpenses = async (req,res) => {
+   const getOperationByType = async (req,res) => {
     try {
       const {query} = req
       console.log("query:",query)
@@ -149,7 +149,7 @@ const operationControllers = (Operation) => {
     }
   }
   
-return {getOperations,  getExpenses , postOperation, getOperationById,putOperationById, deleteOperationById}  
+return {getOperations,  getOperationByType , postOperation, getOperationById,putOperationById, deleteOperationById}  
 }
 
 module.exports = operationControllers

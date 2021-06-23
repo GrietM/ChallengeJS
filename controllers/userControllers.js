@@ -87,7 +87,7 @@ const userControllers = (User) => {
       email: user.email,
       type: user.type
     } 
-    return  jwt.sign(tokenUser, 'EverGarden2021',{ expiresIn: 900 })
+    return  jwt.sign(tokenUser, 'AlkemyChallengeJS')//,{ expiresIn: 900 })
   }
 
   const getUserById = async (req,res)=> {
