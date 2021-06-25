@@ -8,7 +8,7 @@ const routes = (Operation) => {
   const operationRouter = express.Router()
   const controller = operationControllers(Operation)
 
-  operationRouter.route('/admin/operations')
+  operationRouter.route('/operations')
     .get (checkToken,
         //validator.query(operationValidations.operationValidationsQuery), //ver q onda las "s"
         controller.getOperations)  
@@ -16,17 +16,17 @@ const routes = (Operation) => {
       //validator.body(operationValidations.operationValidationsBody),
       controller.postOperation) 
   
-  operationRouter.route('/admin/operationsbytype')
+  operationRouter.route('/operationsbytype')
     .get (checkToken,
       //validator.query(operationValidations.operationValidationsQuery), //ver q onda las "s"
       controller.getOperationByType)  
 
-  operationRouter.route('/admin/balance')
+  operationRouter.route('/balance')
   .get (checkToken,
     //validator.query(operationValidations.operationValidationsQuery), //ver q onda las "s"
     controller.operationsBalance)    
 
-  operationRouter.route('/admin/operations/:operationId')
+  operationRouter.route('/operations/:operationId')
   .get(checkToken,
     //validator.params(operationValidations.operationValidationsParams),
     controller.getOperationById)

@@ -5,7 +5,6 @@ const userControllers = (User) => {
   const getUsers = async (req,res)=> {
     try {
       const {query} = req
-      //uso comando de mongo y con el find sin parametros traigo todo
       const response = await User.find(query)
       return res.json(response)
     } catch(error){
@@ -19,7 +18,6 @@ const userControllers = (User) => {
 
       const newUserName = () => {
         if (body.lastName && body.firstName ) { 
-          //solo tomo el primer nombre o apellido ingresado
           const splitFirstName = body.firstName.split(" ")
           const splitLastName = body.lastName.split(" ")
           const newusername = splitLastName[0].toUpperCase() + "-"+ splitFirstName[0] 
@@ -62,9 +60,9 @@ const userControllers = (User) => {
       const {userName , password} = body
       
       const foundUser = await User.findOne ({"userName": userName})
-      if (foundUser ) {// && passwordValidation(foundUser, password) ) {
+      if (foundUser ) {
         const isPasswordCorrect = await  bcrypt.compare( password , foundUser.password)
-        if (isPasswordCorrect) { //&& foundUser.type == 'admin') {
+        if (isPasswordCorrect) { 
             return  res.status(201).json({message: 'Valid User',  token: createToken (foundUser) })
           } 
         else {

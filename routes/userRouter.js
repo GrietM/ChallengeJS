@@ -9,7 +9,7 @@ const routes = (User)=>{
     const userRouter = express.Router()
     const controller = userControllers(User)
 
-    userRouter.route('/admin/users')
+    userRouter.route('/users')
       .get(//checkToken,
         //validator.query(usersValidation.usersValidationQuery), 
         controller.getUsers
@@ -19,7 +19,7 @@ const routes = (User)=>{
         controller.postUser
       )
 
-    userRouter.route('/admin/users/:userId')
+    userRouter.route('/users/:userId')
       .get(checkToken,
         //validator.params(usersValidation.usersValidationParams), 
         controller.getUserById
@@ -34,7 +34,7 @@ const routes = (User)=>{
         controller.deleteUser
       )
         
-    userRouter.route('/admin/users/login')
+    userRouter.route('/users/login')
       .post(
         //validator.body(usersValidation.usersValidationLogin),
         controller.postUserLogin

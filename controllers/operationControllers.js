@@ -4,36 +4,25 @@ const operationControllers = (Operation) => {
     try {
       const {query} = req
       const response = await Operation.find(query)
-
-      //armo el balance
-      console.log('response.data de las operaciones',response)
-        // es un array de objetos. response [{.amount},{},{}]
         let operations = response
         let totalExpenses = 0
         let totalIncomes=0
-        console.log("operations:",operations)
         for (let i = 0; i < operations.length; i++) {
           if (operations[i].operationType == "expense"){
-          // Acceder al objeto del arreglo en la posicion "i"
           totalExpenses = totalExpenses+operations[i].amount
-          //console.log("totalExpenses",totalExpenses)
           }
           else{
           totalIncomes = totalIncomes+operations[i].amount
-          //console.log("totalIncomes",totalIncomes)}
           }}
           let balance = totalIncomes - totalExpenses
-          console.log("BALANCE:", balance)
       if (response.length == 0){
         return res.status(202).json({message: 'No matches found'})
       } 
       else {
         if (response.length < 10){
-        console.log("hay", response.length, 'operaciones')
         response.reverse();//Asi muestra los ultimos 10 registrados pero no significa que sean las ultimas 10 operaciones segun la fecha cronologica!
         return res.json(response) }
         else{
-        console.log("hay", response.length, 'operaciones')
         response.reverse(); //Asi muestra los ultimos 10 registrados pero no significa que sean las ultimas 10 operaciones segun la fecha cronologica!
         //response.sort((a, b) => new Date(a.date).getTime() > new Date(b.date).getTime())
         return res.json(response)}
@@ -50,20 +39,13 @@ const operationControllers = (Operation) => {
    const getOperationByType = async (req,res) => {
     try {
       const {query} = req
-      console.log("query:",query)
       if (query.operationType == ('expense')){
-        console.log('entró por el true de query')
         const response = await Operation.find(query)
         response.reverse();
-        console.log('response.data de los expneses',response)
-        // es un array de objetos. response [{.amount},{},{}]
         let expenses = response
         let totalExpenses = 0
-        console.log("expenses:",expenses)
         for (let i = 0; i < expenses.length; i++) {
-          // Acceder al objeto del arreglo en la posicion "i"
           totalExpenses = totalExpenses+expenses[i].amount}
-          console.log("totalExpenses:", totalExpenses)
         if (response.length == 0){
           return res.status(202).json({message: 'No matches found'})
         } 
@@ -72,7 +54,6 @@ const operationControllers = (Operation) => {
       }}
         else{
           if (query.operationType == ('income')){
-            console.log('entró por el else de query')
             const response = await Operation.find(query)
             response.reverse();
             if (response.length == 0){
@@ -80,13 +61,11 @@ const operationControllers = (Operation) => {
             } 
             else {
               return res.json(response) 
-              console.log("get OP response:", response)
           }}
         } 
     }
 
     catch(err){
-      console.log(err)
       res.status(500).json({message:"Internal Server Error"})
       throw err
     }
@@ -95,23 +74,19 @@ const operationControllers = (Operation) => {
  const operationsBalance = async (req,res) => {
   try {
     const {query} = req
-    const response = await Operation.find(query)
-    //armo el balance
-    console.log('response.data de las operaciones',response)
-      // es un array de objetos. response [{.amount},{},{}]
+    const response = await Operation.find(query)     
       let operations = response
       let totalExpenses = 0
       let totalIncomes = 0
-      console.log("operations:",operations)
       for (let i = 0; i < operations.length; i++) {
         if (operations[i].operationType == "expense"){
-        // Acceder al objeto del arreglo en la posicion "i"
+       
         totalExpenses = totalExpenses+operations[i].amount
-        //console.log("totalExpenses",totalExpenses)
+        
         }
         else{
         totalIncomes = totalIncomes+operations[i].amount
-        //console.log("totalIncomes",totalIncomes)}
+       
         }}
         let balance = totalIncomes - totalExpenses
         const balanceData = 
@@ -120,8 +95,7 @@ const operationControllers = (Operation) => {
         totalExpenses: totalExpenses,
         balance:balance
        }
-        console.log("balanceData:", balanceData)
-        console.log("BALANCE:", balance)
+        
         if (response.length == 0){
           return res.status(202).json({message: 'No matches found'})
         } 
