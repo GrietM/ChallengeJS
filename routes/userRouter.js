@@ -14,7 +14,7 @@ const routes = (User)=>{
         //validator.query(usersValidation.usersValidationQuery), 
         controller.getUsers
       ) 
-      .post(checkToken,
+      .post(
         //validator.body(usersValidation.usersValidationBody), 
         controller.postUser
       )

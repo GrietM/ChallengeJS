@@ -54,6 +54,7 @@ const operationControllers = (Operation) => {
       if (query.operationType == ('expense')){
         console.log('entró por el true de query')
         const response = await Operation.find(query)
+        response.reverse();
         console.log('response.data de los expneses',response)
         // es un array de objetos. response [{.amount},{},{}]
         let expenses = response
@@ -73,6 +74,7 @@ const operationControllers = (Operation) => {
           if (query.operationType == ('income')){
             console.log('entró por el else de query')
             const response = await Operation.find(query)
+            response.reverse();
             if (response.length == 0){
               return res.status(202).json({message: 'No matches found'})
             } 

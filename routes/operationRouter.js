@@ -22,7 +22,7 @@ const routes = (Operation) => {
       controller.getOperationByType)  
 
   operationRouter.route('/admin/balance')
-  .get (//checkToken,
+  .get (checkToken,
     //validator.query(operationValidations.operationValidationsQuery), //ver q onda las "s"
     controller.operationsBalance)    
 
