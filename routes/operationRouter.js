@@ -11,7 +11,7 @@ const routes = (Operation) => {
   operationRouter.route('/operations')
     .get (checkToken,
         //validator.query(operationValidations.operationValidationsQuery), //ver q onda las "s"
-        controller.getOperations)  
+        controller.getOperations)  //getOperationsByUser
     .post (checkToken,
       //validator.body(operationValidations.operationValidationsBody),
       controller.postOperation) 

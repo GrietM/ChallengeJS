@@ -15,6 +15,38 @@ const operationControllers = (Operation) => {
           totalIncomes = totalIncomes+operations[i].amount
           }}
           let balance = totalIncomes - totalExpenses
+      /* if (response.length == 0){
+        return res.status(202).json({message: 'No matches found'})
+      } 
+      else { */
+       
+        response.reverse();//Asi muestra los ultimos 10 registrados pero no significa que sean las ultimas 10 operaciones segun la fecha cronologica!
+        response.sort((a, b) => new Date(a.date).getTime() > new Date(b.date).getTime())
+        return res.json(response) }
+
+    catch(err){
+      console.log(err)
+      res.status(500).json({message:"Internal Server Error"})
+      throw err
+    }
+  } 
+
+  const getOperationsByUser = async (req,res) => {
+    try {
+      const {query} = req
+      const response = await Operation.find(params.user)
+      //const response = await Operation.find(query)
+        let operations = response
+        let totalExpenses = 0
+        let totalIncomes=0
+        for (let i = 0; i < operations.length; i++) {
+          if (operations[i].operationType == "expense"){
+          totalExpenses = totalExpenses+operations[i].amount
+          }
+          else{
+          totalIncomes = totalIncomes+operations[i].amount
+          }}
+          let balance = totalIncomes - totalExpenses
       if (response.length == 0){
         return res.status(202).json({message: 'No matches found'})
       } 
@@ -41,27 +73,30 @@ const operationControllers = (Operation) => {
       const {query} = req
       if (query.operationType == ('expense')){
         const response = await Operation.find(query)
+        //const response = await Operation.find(params.user)
         response.reverse();
-        let expenses = response
+        /* let expenses = response
         let totalExpenses = 0
         for (let i = 0; i < expenses.length; i++) {
-          totalExpenses = totalExpenses+expenses[i].amount}
-        if (response.length == 0){
+          totalExpenses = totalExpenses+expenses[i].amount} */
+        /* if (response.length == 0){
           return res.status(202).json({message: 'No matches found'})
         } 
-        else {
+        else { */
           return res.json(response) 
-      }}
+      }
         else{
           if (query.operationType == ('income')){
             const response = await Operation.find(query)
+            //const response = await Operation.find(params.user)
             response.reverse();
-            if (response.length == 0){
+           /*  if (response.length == 0){
+              console.log('No matches found!')
               return res.status(202).json({message: 'No matches found'})
             } 
-            else {
+            else { */
               return res.json(response) 
-          }}
+          }
         } 
     }
 
@@ -176,7 +211,7 @@ const operationControllers = (Operation) => {
     }
   }
   
-return {getOperations,  getOperationByType ,operationsBalance, postOperation, getOperationById,putOperationById, deleteOperationById}  
+return {getOperations, getOperationsByUser, getOperationByType ,operationsBalance, postOperation, getOperationById,putOperationById, deleteOperationById}  
 }
 
 module.exports = operationControllers
