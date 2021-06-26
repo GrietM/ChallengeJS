@@ -1,8 +1,7 @@
-//archivo especifico para que maneje los endpoints de usuarios
 const express = require('express')
+const validator = require ('express-joi-validation').createValidator()
 const userControllers = require('../controllers/userControllers')
-//const validator = require ('express-joi-validation').createValidator()
-//const usersValidation = require ('../validations/usersValidations')
+const userValidations = require ('../validations/usersValidations')
 const checkToken = require ('../checkToken')
 
 const routes = (User)=>{
@@ -10,39 +9,38 @@ const routes = (User)=>{
     const controller = userControllers(User)
 
     userRouter.route('/users')
-      .get(//checkToken,
-        //validator.query(usersValidation.usersValidationQuery), 
+      .get(checkToken,
+        validator.query(userValidations.userValidationsQuery), 
         controller.getUsers
       ) 
       .post(
-        //validator.body(usersValidation.usersValidationBody), 
+        validator.body(userValidations.userValidationsBody), 
         controller.postUser
       )
 
     userRouter.route('/users/:userId')
       .get(checkToken,
-        //validator.params(usersValidation.usersValidationParams), 
+        validator.params(userValidations.userValidationsParams), 
         controller.getUserById
       )
       .put(checkToken,
-        //validator.params(usersValidation.usersValidationParams), 
-        //validator.body(usersValidation.usersValidationPut), 
+        validator.params(userValidations.userValidationsParams), 
+        validator.body(userValidations.userValidationsPut), 
         controller.putUser
       )
       .delete(checkToken,
-        //validator.params(usersValidation.usersValidationParams), 
+        validator.params(userValidations.userValidationsParams), 
         controller.deleteUser
       )
         
     userRouter.route('/users/login')
       .post(
-        //validator.body(usersValidation.usersValidationLogin),
+        validator.body(userValidations.userValidationsLogin),
         controller.postUserLogin
       )
      
-  //salida de la funcion de rutas
+  
   return userRouter
 }
 
-//exporto la funcion para poder convocarla
 module.exports = routes

@@ -5,7 +5,7 @@ const operationControllers = (Operation) => {
       const {query} = req
       const response = await Operation.find(query)
         let operations = response
-        let totalExpenses = 0
+        let totalExpenses=0
         let totalIncomes=0
         for (let i = 0; i < operations.length; i++) {
           if (operations[i].operationType == "expense"){
@@ -19,9 +19,8 @@ const operationControllers = (Operation) => {
         return res.status(202).json({message: 'No matches found'})
       } 
       else { */
-       
         response.reverse();//Asi muestra los ultimos 10 registrados pero no significa que sean las ultimas 10 operaciones segun la fecha cronologica!
-        response.sort((a, b) => new Date(a.date).getTime() > new Date(b.date).getTime())
+       // response.sort((a, b) => new Date(a.date).getTime() > new Date(b.date).getTime()) 
         return res.json(response) }
 
     catch(err){
@@ -75,11 +74,7 @@ const operationControllers = (Operation) => {
         const response = await Operation.find(query)
         //const response = await Operation.find(params.user)
         response.reverse();
-        /* let expenses = response
-        let totalExpenses = 0
-        for (let i = 0; i < expenses.length; i++) {
-          totalExpenses = totalExpenses+expenses[i].amount} */
-        /* if (response.length == 0){
+       /* if (response.length == 0){
           return res.status(202).json({message: 'No matches found'})
         } 
         else { */
