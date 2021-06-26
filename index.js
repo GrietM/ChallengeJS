@@ -1,12 +1,11 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
-
+const jwt = require('express-jwt')
 const Operation = require('./models/operationModel')
 const operationRouter = require('./routes/operationRouter')(Operation) 
 const User = require('./models/userModel.js')
 const userRouter = require('./routes/userRouter.js')(User)
-const jwt = require('express-jwt')
 
 const app = express()
 app.use(bodyParser.urlencoded({extended: true}))

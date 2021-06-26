@@ -3,7 +3,7 @@ const Joi = require ('joi')
 const userValidationsBody = Joi.object({
     firstName: Joi.string().min(1).regex(/^[a-zA-Z0-9\s ]{3,30}$/).required(),
     lastName : Joi.string().min(1).regex(/^[a-zA-Z0-9\s ]{3,30}$/).required(),
-    userName: Joi.string(), //no lo pongo required porque en realidad nosotros despues lo pisamos con la logica
+    userName: Joi.string(), // no es requerido porque se crea dentro del controlador del PostUser 
     password: Joi.string().alphanum().min(3).max(10).required(),
     email: Joi.string().email().required()
 })
@@ -20,7 +20,7 @@ const userValidationsParams = Joi.object({
 })
       
 const userValidationsPut = Joi.object({
-    firstName: Joi.string().min(1).alphanum(),//regex(/^[a-zA-Z0-9_\s ]$/), 
+    firstName: Joi.string().min(1).alphanum(),
     lastName: Joi.string().min(1).alphanum(),
     userName: Joi.string().min(3),
     password: Joi.string().alphanum().min(3).max(10),

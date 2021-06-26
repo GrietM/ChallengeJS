@@ -4,29 +4,14 @@ const operationControllers = (Operation) => {
     try {
       const {query} = req
       const response = await Operation.find(query)
-        let operations = response
-        let totalExpenses=0
-        let totalIncomes=0
-        for (let i = 0; i < operations.length; i++) {
-          if (operations[i].operationType == "expense"){
-          totalExpenses = totalExpenses+operations[i].amount
-          }
-          else{
-          totalIncomes = totalIncomes+operations[i].amount
-          }}
-          let balance = totalIncomes - totalExpenses
-      /* if (response.length == 0){
-        return res.status(202).json({message: 'No matches found'})
-      } 
-      else { */
-        response.reverse();//Asi muestra los ultimos 10 registrados pero no significa que sean las ultimas 10 operaciones segun la fecha cronologica!
-       // response.sort((a, b) => new Date(a.date).getTime() > new Date(b.date).getTime()) 
-        return res.json(response) }
-
+      response.reverse();//Asi muestra los ultimos 10 registrados pero no significa que sean las ultimas 10 operaciones segun la fecha cronologica!
+      // response.sort((a, b) => new Date(a.date).getTime() > new Date(b.date).getTime()) 
+      return res.json(response)
+    }
     catch(err){
-      console.log(err)
-      res.status(500).json({message:"Internal Server Error"})
-      throw err
+        console.log(err)
+        res.status(500).json({message:"Internal Server Error"})
+        throw err
     }
   } 
 
@@ -35,31 +20,8 @@ const operationControllers = (Operation) => {
       const {query} = req
       const response = await Operation.find(params.user)
       //const response = await Operation.find(query)
-        let operations = response
-        let totalExpenses = 0
-        let totalIncomes=0
-        for (let i = 0; i < operations.length; i++) {
-          if (operations[i].operationType == "expense"){
-          totalExpenses = totalExpenses+operations[i].amount
-          }
-          else{
-          totalIncomes = totalIncomes+operations[i].amount
-          }}
-          let balance = totalIncomes - totalExpenses
-      if (response.length == 0){
-        return res.status(202).json({message: 'No matches found'})
-      } 
-      else {
-        if (response.length < 10){
-        response.reverse();//Asi muestra los ultimos 10 registrados pero no significa que sean las ultimas 10 operaciones segun la fecha cronologica!
-        return res.json(response) }
-        else{
-        response.reverse(); //Asi muestra los ultimos 10 registrados pero no significa que sean las ultimas 10 operaciones segun la fecha cronologica!
-        //response.sort((a, b) => new Date(a.date).getTime() > new Date(b.date).getTime())
-        return res.json(response)}
-        }
-      
-    } 
+      return res.json(response)
+    }
     catch(err){
       console.log(err)
       res.status(500).json({message:"Internal Server Error"})
@@ -67,34 +29,24 @@ const operationControllers = (Operation) => {
     }
   } 
 
-   const getOperationByType = async (req,res) => {
+  const getOperationsByType = async (req,res) => {
     try {
       const {query} = req
       if (query.operationType == ('expense')){
         const response = await Operation.find(query)
         //const response = await Operation.find(params.user)
         response.reverse();
-       /* if (response.length == 0){
-          return res.status(202).json({message: 'No matches found'})
-        } 
-        else { */
-          return res.json(response) 
+        return res.json(response) 
       }
-        else{
+      else{
           if (query.operationType == ('income')){
             const response = await Operation.find(query)
             //const response = await Operation.find(params.user)
             response.reverse();
-           /*  if (response.length == 0){
-              console.log('No matches found!')
-              return res.status(202).json({message: 'No matches found'})
-            } 
-            else { */
-              return res.json(response) 
+            return res.json(response) 
           }
-        } 
+      } 
     }
-
     catch(err){
       res.status(500).json({message:"Internal Server Error"})
       throw err
@@ -105,40 +57,41 @@ const operationControllers = (Operation) => {
   try {
     const {query} = req
     const response = await Operation.find(query)     
-      let operations = response
-      let totalExpenses = 0
-      let totalIncomes = 0
+
+    let operations = response
+    let totalExpenses = 0
+    let totalIncomes = 0
+
       for (let i = 0; i < operations.length; i++) {
         if (operations[i].operationType == "expense"){
-       
         totalExpenses = totalExpenses+operations[i].amount
-        
         }
         else{
         totalIncomes = totalIncomes+operations[i].amount
-       
-        }}
-        let balance = totalIncomes - totalExpenses
-        const balanceData = 
-       {
-        totalIncomes: totalIncomes,
-        totalExpenses: totalExpenses,
-        balance:balance
-       }
-        
+        }
+      }
+
+    let balance = totalIncomes - totalExpenses
+    const balanceData = 
+      {
+      totalIncomes: totalIncomes,
+      totalExpenses: totalExpenses,
+      balance:balance
+      }
+
         if (response.length == 0){
           return res.status(202).json({message: 'No matches found'})
         } 
         else {
-          return res.json(balanceData) }
+          return res.json(balanceData) 
+        }
   }
   catch(err){
     console.log(err)
     res.status(500).json({message:"Internal Server Error"})
     throw err
   }
-    } 
-
+} 
 
   const postOperation = async (req,res) => {
     try {
@@ -194,7 +147,7 @@ const operationControllers = (Operation) => {
   }
 
   const deleteOperationById = async(req,res)=>{
-     try{
+    try{
     const {params} = req
     await Operation.findByIdAndDelete(params.operationId)
     return res.status(202).json({message:'Operation succesfully deleted'})
@@ -206,7 +159,7 @@ const operationControllers = (Operation) => {
     }
   }
   
-return {getOperations, getOperationsByUser, getOperationByType ,operationsBalance, postOperation, getOperationById,putOperationById, deleteOperationById}  
+return {getOperations, getOperationsByUser, getOperationsByType ,operationsBalance, postOperation, getOperationById,putOperationById, deleteOperationById}  
 }
 
 module.exports = operationControllers

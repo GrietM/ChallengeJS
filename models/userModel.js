@@ -1,13 +1,10 @@
 const mongoose = require("mongoose")
-
-// la clase moongoose se extrae el schema
 const {Schema} =  mongoose
 
-// creo un objeto a partir de la clase schema
 const userModel = new Schema ({
     firstName: {type: String, required: true},
     lastName: {type: String , required: true},
-    userName: {type: String}, // lo creamos nosotros
+    userName: {type: String}, // no es requerido porque se crea dentro del controlador del PostUser
     password: {type: String , required: true},
     email: {type: String , required: true},
 },

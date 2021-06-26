@@ -10,7 +10,7 @@ const routes = (Operation) => {
 
   operationRouter.route('/operations')
     .get (checkToken,
-        validator.query(operationValidations.operationValidationsQuery), //ver q onda las "s"
+        validator.query(operationValidations.operationValidationsQuery), 
         controller.getOperations)  //getOperationsByUser
     .post (checkToken,
       validator.body(operationValidations.operationValidationsBody),
@@ -19,7 +19,7 @@ const routes = (Operation) => {
   operationRouter.route('/operationsbytype')
     .get (checkToken,
       validator.query(operationValidations.operationValidationsQuery), 
-      controller.getOperationByType)  
+      controller.getOperationsByType)  
 
   operationRouter.route('/balance')
   .get (checkToken,
@@ -38,7 +38,8 @@ const routes = (Operation) => {
     validator.params(operationValidations.operationValidationsParams),
     controller.deleteOperationById)
     
-  return operationRouter
+return operationRouter
+
 }
 
 module.exports = routes

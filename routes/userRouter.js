@@ -40,7 +40,8 @@ const routes = (User)=>{
       )
      
   
-  return userRouter
+return userRouter
+
 }
 
 module.exports = routes
