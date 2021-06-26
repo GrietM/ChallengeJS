@@ -151,8 +151,7 @@ const operationControllers = (Operation) => {
               concept: body.concept,
               amount: body.amount,
               date :body.date,
-              //operationType:body.operationType,  --> no se debe poder cambiar! aramr un mensaje..? ver si lo resuelvo directamente en el front 
-          }
+            }
         }
         )
       return res.status(202).json(response)
