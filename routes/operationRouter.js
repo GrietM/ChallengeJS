@@ -21,7 +21,7 @@ const routes = (Operation) => {
       validator.query(operationValidations.operationValidationsQuery), 
       controller.getOperationsByType)  
 
-  operationRouter.route('/balance')
+  operationRouter.route('/operationsbalance')
   .get (checkToken,
     validator.query(operationValidations.operationValidationsQuery), 
     controller.operationsBalance)    
